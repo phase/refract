@@ -571,7 +571,7 @@ enum Directions {
 				return this;
 			case DOWN_RIGHT:
 				return UP_LEFT;
-			case UP_LEFT"
+			case UP_LEFT:
 				return DOWN_RIGHT;
 			default:
 				return null;
