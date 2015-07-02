@@ -277,7 +277,7 @@ public class Refract {
 			return;
 		}
 
-		else if(c == '>' || c == '<' || c == '^' || c == 'v' || c == '/' || c == '\\' || c == '|' || c == '_' || c == 'x' || c == '#') {
+		else if(c == '>' || c == '<' || c == '^' || c == 'v' || c == '/' || c == '\\' || c == '|' || c == '_' || c == 'x' || c == '#' || c == 'z' || c == 'y') {
 			dir = dir.get(c);
 		}
 
@@ -566,6 +566,13 @@ enum Directions {
 				return LEFT;
 			case UP:
 				return RIGHT;
+			case UP_RIGHT:
+			case DOWN_LEFT:
+				return this;
+			case DOWN_RIGHT:
+				return UP_LEFT;
+			case UP_LEFT"
+				return DOWN_RIGHT;
 			default:
 				return null;
 			}
@@ -579,29 +586,56 @@ enum Directions {
 				return RIGHT;
 			case UP:
 				return LEFT;
+			case DOWN_RIGHT:
+			case UP_LEFT:
+				return this;
+			case UP_RIGHT:
+				return DOWN_LEFT;
+			case DOWN_LEFT:
+				return UP_RIGHT;
 			default:
 				return null;
 			}
 		case '|':
-			if(this == UP || this == DOWN)
+			switch(this) {
+			case UP:
+			case DOWN:
 				return this;
-			else if(this == RIGHT)
+			case RIGHT:
 				return LEFT;
-			else if(this == LEFT)
+			case LEFT:
 				return RIGHT;
-			else
-				return null;	
-			
-		case '_':
-			if(this == RIGHT || this == LEFT)
-				return this;
-			else if(this == UP)
-				return DOWN;
-			else if(this == DOWN)
-				return UP;
-			else
+			case UP_RIGHT:
+				return DOWN_RIGHT;
+			case DOWN_RIGHT:
+				return UP_RIGHT;
+			case UP_LEFT:
+				return DOWN_LEFT;
+			case DOWN_LEFT:
+				return UP_LEFT;
+			default:
 				return null;
-			
+			}
+		case '_':
+			switch(this) {
+			case UP:
+			case DOWN:
+				return this;
+			case RIGHT:
+				return LEFT;
+			case LEFT:
+				return RIGHT;
+			case UP_RIGHT:
+				return DOWN_LEFT;
+			case DOWN_LEFT:
+				return UP_RIGHT;
+			case UP_LEFT:
+				return DOWN_RIGHT;
+			case DOWN_RIGHT:
+				return UP_LEFT;
+			default:
+				return null;
+			}
 		case 'x':
 			int min = 1, max = 8;
 			int ran = new Random().nextInt(max - min) + min;
@@ -645,6 +679,44 @@ enum Directions {
 				return DOWN_RIGHT;
 			case DOWN_LEFT:
 				return UP_RIGHT;
+			default:
+				return null;
+			}
+		case 'y':
+			switch(this) {
+			case UP:
+			case DOWN:
+			case DOWN_RIGHT:
+			case DOWN_LEFT:
+				return this;
+			case LEFT:
+				return DOWN_LEFT;
+			case RIGHT:
+				return DOWN_RIGHT;
+			case UP_RIGHT:
+				return DOWN_LEFT;
+			case UP_LEFT:
+				return DOWN_RIGHT;
+			default:
+				return null;
+			}
+		case 'z':
+			switch(this) {
+			case UP:
+				return DOWN;
+			case DOWN:
+				return UP;
+			case DOWN_RIGHT:
+				return UP_LEFT;
+			case DOWN_LEFT:
+			case UP_RIGHT:
+				return this;
+			case LEFT:
+				return DOWN_RIGHT;
+			case RIGHT:
+				return UP_LEFT;
+			case UP_LEFT:
+				return DOWN_RIGHT;
 			default:
 				return null;
 			}
