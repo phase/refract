@@ -28,7 +28,7 @@ a a
 ;  ;
 a   
 5
-``    
+```  
 
 ###`z`
 The stack contents are shown after each example.
