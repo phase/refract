@@ -6,14 +6,29 @@ Most of the language is from [><>](https://esolangs.org/wiki/Fish), but there ar
 
 Movement can go diagonal, though it doesn't if you don't include `x`, `y`, or `z`.
 
-Random movement can go diagonal.
+###`x`
+Random movement can go diagonal (image in example starts in the center).
 
 ```
-x1a;
+;  ;  ;
+ a a a
+  678
+;a5x1a;
+  432
+ a a a
+;  ;  ;
+```
+
+This shows some wrapping and more randomness.
+
+```
+x1a;a4
 23
 a a
 ;  ;
-```
+a   
+5
+``    
 
 ###`z`
 The stack contents are shown after each example.
