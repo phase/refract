@@ -1,10 +1,12 @@
 # refract
 **refract** is a 2D, stack-based, esoteric language.
 
-#Differences
-Movement can go diagonal
+##differences
+Most of the language is from [><>](https://esolangs.org/wiki/Fish), but there are some differences.
 
-Random movement
+Movement can go diagonal, though it doesn't if you don't include `x`, `y`, or `z`.
+
+Random movement can go diagonal.
 
 ```
 x1a;
@@ -13,7 +15,7 @@ a a
 ;  ;
 ```
 
-##z
+###`z`
 The stack contents are shown after each example.
 
 ```
@@ -58,7 +60,7 @@ z
 
 **11**
 
-##y
+###`y`
 
 ```
 111y
@@ -86,3 +88,19 @@ y
 ```
 
 **1221**
+
+###`#`
+
+```
+1
+#
+```
+
+**11**
+
+```
+ 1
+#
+```
+
+**11**
