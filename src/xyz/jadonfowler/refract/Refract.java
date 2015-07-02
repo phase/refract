@@ -24,7 +24,7 @@ public class Refract {
 	StringBuilder sb = new StringBuilder(); // The StringBuilder for the string
 
 	public Refract(String[] args) {
-		String filename = args.length>=1 ? args[0] : null;
+		String filename = args.length >= 1 ? args[0] : null;
 		String[] data = null;
 		stacks[sid] = new Stack(stacksize, this);
 
@@ -107,7 +107,7 @@ public class Refract {
 		}
 
 		if(debug) {
-			for(String s:data) {
+			for(String s : data) {
 				System.out.println(s);
 			}
 		}
@@ -115,7 +115,7 @@ public class Refract {
 		grid = new char[data.length][];
 		
 		int i = 0;
-		for(String line:data) {
+		for(String line : data) {
 			grid[i++]=line.toCharArray();
 		}
 
@@ -143,8 +143,7 @@ public class Refract {
 
 				check();
 
-				if(debug)
-					stacks[sid].print();
+				if(debug) stacks[sid].print();
 
 				if(skip) {
 					skip=false;
@@ -153,8 +152,8 @@ public class Refract {
 
 				parse();
 
-				char c=grid[pos[1]][pos[0]];
-				boolean isNOP=(c==' ' || c==0);
+				char c = grid[pos[1]][pos[0]];
+				boolean isNOP = (c == ' ' || c == 0);
 				
 				if(tick || !isNOP) {
 					sleep(wait);
@@ -163,7 +162,7 @@ public class Refract {
 			
 		} catch(IOException ioe) {
 			System.out.println("An unexpected error happened: ");
-			ioe.printStackTrace(System.out);
+			ioe.printStackTrace();
 			return;
 		}
 		System.exit(0);
@@ -172,28 +171,28 @@ public class Refract {
 
 	public void showHelp() {
 		System.out.println("usage: java Refract [-h] (<script file> | -c <code>) [<options>]");
-		System.out.println("");
+		System.out.println();
 		System.out.println("    Execute a refract script.");
-		System.out.println("");
+		System.out.println();
 		System.out.println("    Executing a script is as easy as:");
 		System.out.println("        java Refract <script file>");
-		System.out.println("");
+		System.out.println();
 		System.out.println("    You can also execute code directly using the -c/--code flag:");
 		System.out.println("        java Refract -c '1n23nn;'");
 		System.out.println("        > 132");
-		System.out.println("");
+		System.out.println();
 		System.out.println("    The -v and -s flags can be used to prepopulate the stack:");
 		System.out.println("        java Refract echo.fish -s \"hello, world\" -v 32 49 50 51 -s \"456\"");
 		System.out.println("        > hello, world 123456");
-		System.out.println("");
+		System.out.println();
 		System.out.println("optional arguments:");
 		System.out.println("  -h, --help            show this help message and exit");
-		System.out.println("");
+		System.out.println();
 		System.out.println("code:");
 		System.out.println("  script                .refract file to execute");
 		System.out.println("  -c <code>, --code <code>");
 		System.out.println("                        string of instructions to execute");
-		System.out.println("");
+		System.out.println();
 		System.out.println("options:");
 		System.out.println("  -s <string>, --string <string>");
 		System.out.println("  -v <number> [<number> ...], --value <number> [<number> ...]");
@@ -283,22 +282,19 @@ public class Refract {
 		}
 
 		else if(c == '!') {
-			if(debug)
-				System.out.println("SKIP");
+			if(debug) System.out.println("SKIP");
 			skip = true;
 		}
 
 		else if(c == '?') {
-			if(debug)
-				System.out.println("COND SKIP");
+			if(debug) System.out.println("COND SKIP");
 
 			double x = stacks[sid].pop();
 			skip = (x == 0);
 		}
 
 		else if(c == '.') {
-			if(debug)
-				System.out.println("JUMP");
+			if(debug) System.out.println("JUMP");
 
 			double y = stacks[sid].pop();
 			double x = stacks[sid].pop();
@@ -311,20 +307,18 @@ public class Refract {
 		}
 
 		else if((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
-			if(debug)
-				System.out.println("NUMBER");
+			if(debug) System.out.println("NUMBER");
 
 			int i = Integer.parseInt(c + "", 16);
 			stacks[sid].push(i);
 		}
 
 		else if(c == '+' || c == '-' || c == '*' || c == ',' || c == '%' || c == '=' || c == '(' || c == ')') {
-			double y=stacks[sid].pop();
-			double x=stacks[sid].pop();
-			double z=0;
+			double y = stacks[sid].pop();
+			double x = stacks[sid].pop();
+			double z = 0;
 
-			if(debug)
-				System.out.println("MATH "+c);
+			if(debug) System.out.println("MATH "+c);
 
 			switch(c) {
 			case '+':
@@ -383,7 +377,6 @@ public class Refract {
 
 			else if(c == ']') {
 				sid--;
-
 				stacks[sid] = merge(stacks[sid], stacks[sid+1]);
 			}		
 		}
@@ -500,9 +493,8 @@ public class Refract {
 		return z;
 	}
 
-	public static Refract refract;
 	public static void main(String[] args) {
-		refract = new Refract(args);
+		new Refract(args);
 	}
 }
 
