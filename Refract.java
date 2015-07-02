@@ -1,5 +1,3 @@
-package xyz.jadonfowler.refract;
-
 import java.io.*;
 import java.util.Random;
 
