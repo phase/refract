@@ -782,9 +782,9 @@ class Stack {
             x = pop();
             y = pop();
             z = pop();
+            push(y);
             push(x);
             push(z);
-            push(y);
             break;
         case 'r':
             if (refract.debug) System.out.println("REVERSE");
