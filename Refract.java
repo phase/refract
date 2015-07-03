@@ -224,7 +224,7 @@ public class Refract {
             System.exit(0);
         }
         else if (codeBlockCreate) {
-            codeBlocks.add(new CodeBlock(codeBlockBuilder.toString(), c));
+            codeBlocks.add(new CodeBlock(codeBlockBuilder.toString(), c, this));
             codeBlockCreate = false;
             codeBlockBuilder = new StringBuilder();
         }
