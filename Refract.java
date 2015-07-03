@@ -4,7 +4,7 @@ import java.util.Random;
 public class Refract {
 
     int sid = 0; // The current StackID
-    int wait = 0000; // Time to wait between commands in milliseconds
+    public int wait = 0000; // Time to wait between commands in milliseconds
     int stacksize = 64 * 1024; // The size of the stack
     char quote = 0; // The current quote, ' or "
     int[] pos = { -1, 0 }; // The current position
@@ -136,10 +136,7 @@ public class Refract {
 
                 parse(c);
 
-                boolean isNOP = (c == ' ' || c == 0);
-                if (tick || !isNOP) {
-                    sleep(wait);
-                }
+                sleep(c);
             }
         }
         catch (IOException ioe) {
@@ -187,9 +184,12 @@ public class Refract {
         System.out.println("                        whitespace and skipped instructions");
     }
 
-    public void sleep(int time) {
+    public void sleep(char c) {
         try {
-            Thread.sleep(time);
+            boolean isNOP = (c == ' ' || c == 0);
+            if (tick || !isNOP) {
+                Thread.sleep(wait);
+            }
         }
         catch (Exception e) {}
     }
@@ -844,13 +844,20 @@ class CodeBlock {
 
     String code;
     char name;
+    Refract refract
     
-    public CodeBlock(String code, char name) {
+    public CodeBlock(String code, char name, Refract refract) {
         this.code = code;
         this.name = name;
+        this.refract = refract;
     }
 
     public void run() {
-        //TODO parse code
+        Direction d = refract.dir;
+        for (char c : code.toCharArray()) {
+            refract.parse(c);
+            refract.sleep(c);
+        }
+        refract.dir = d;
     }
 }
