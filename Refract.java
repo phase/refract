@@ -18,7 +18,9 @@ public class Refract {
     Stack[] stacks = new Stack[1024]; // The array of stacks
     char[][] grid = null; // The grid from the file
     Directions dir = Directions.RIGHT; // The current direction
-    StringBuilder sb = new StringBuilder(); // The StringBuilder for the string
+    StringBuilder sb = new StringBuilder(); // The StringBuilder for strings
+    StringBuilder codeBlockBuilder = new StringBuilder(); // The StringBuilder for code blocks
+    ArrayList<CodeBlock> codeBlocks = new ArrayList<CodeBlock>();
 
     public Refract(String[] args) {
         String filename = args.length >= 1 ? args[0] : null;
@@ -209,8 +211,17 @@ public class Refract {
     public void parse() throws IOException {
         char c = grid[pos[1]][pos[0]];
         if (debug) System.out.println(c);
+        for (CodeBlock cb : codeBlocks) {
+            if(cb.name == c) {
+                cb.run();
+                return;
+            }
+        }
         if (c == 3) {
             System.exit(0);
+        }
+        else if (c == '{' || c == '}') {
+            //TODO parse blocks
         }
         else if (c == '"' || c == '\'') {
             if (string) {
@@ -301,7 +312,7 @@ public class Refract {
             }
             stacks[sid].push(z);
         }
-        else if (c == ':' || c == '~' || c == '$' || c == '@' || c == '}' || c == '{' || c == 'r' || c == 'l') {
+        else if (c == ':' || c == '~' || c == '$' || c == '@' || c == 'r' || c == 'l') {
             stacks[sid].action(c);
         }
         else if (c == '[' || c == ']') {
@@ -756,22 +767,6 @@ class Stack {
             push(z);
             push(y);
             break;
-        case '}':
-            if (refract.debug) System.out.println("MOVE RIGHT");
-            x = stack[i];
-            for (int a = i; a > 0; a--) {
-                stack[a] = stack[a - 1];
-            }
-            stack[0] = x;
-            break;
-        case '{':
-            if (refract.debug) System.out.println("MOVE LEFT");
-            x = stack[0];
-            for (int a = 0; a < i; a++) {
-                stack[a] = stack[a + 1];
-            }
-            stack[i] = x;
-            break;
         case 'r':
             if (refract.debug) System.out.println("REVERSE");
             reverse();
@@ -823,5 +818,20 @@ class FileIO {
                 fos.write(buf);
             }
         }
+    }
+}
+
+class CodeBlock {
+
+    String code;
+    char name;
+    
+    public CodeBlock(String code, char name) {
+        this.code = code;
+        this.name = name;
+    }
+
+    public void run() {
+        //TODO parse code
     }
 }
