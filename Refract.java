@@ -15,6 +15,8 @@ public class Refract {
     boolean tick = false; // When I have to tick even on NOP
     boolean debug = false; // Debugging mode
     boolean string = false; // When string is turned on
+    boolean codeBlock = false; // When code block is turned on
+    boolean codeBlockCreate = false; // When a new code block is going to be made
     Stack[] stacks = new Stack[1024]; // The array of stacks
     char[][] grid = null; // The grid from the file
     Directions dir = Directions.RIGHT; // The current direction
@@ -130,8 +132,10 @@ public class Refract {
                     skip = false;
                     continue;
                 }
-                parse();
                 char c = grid[pos[1]][pos[0]];
+
+                parse(c);
+
                 boolean isNOP = (c == ' ' || c == 0);
                 if (tick || !isNOP) {
                     sleep(wait);
@@ -208,8 +212,7 @@ public class Refract {
         pos = new int[] { x, y };
     }
 
-    public void parse() throws IOException {
-        char c = grid[pos[1]][pos[0]];
+    public void parse(char c) throws IOException {
         if (debug) System.out.println(c);
         for (CodeBlock cb : codeBlocks) {
             if(cb.name == c) {
@@ -220,8 +223,24 @@ public class Refract {
         if (c == 3) {
             System.exit(0);
         }
+        else if (codeBlockCreate) {
+            codeBlocks.add(new CodeBlock(codeBlockBuilder.toString(), c));
+            codeBlockCreate = false;
+            codeBlockBuilder = new StringBuilder();
+        }
         else if (c == '{' || c == '}') {
-            //TODO parse blocks
+            if (c == '{') {
+                if(codeBlock){throw new IllegalArgumentException("There is already a code block being made!");return;}
+                codeBlock = true;
+            }
+            else if (c == '}') {
+                if(!codeBlock){throw new IllegalArgumentException("There is no code block being made!");return;}
+                codeBlock = false;
+                codeBlockCreate = true;
+            }
+        }
+        else if (codeBlock) {
+            codeBlockBuilder.append(c);
         }
         else if (c == '"' || c == '\'') {
             if (string) {
