@@ -28,26 +28,26 @@ Prints 3 because it assigns it to a space, then calls it with the second space.
 
 Movement can go diagonal, though it doesn't if you don't include `x`, `y`, or `z`.
 
-Random movement can go diagonal (image in example starts in the center).
+Random movement can go diagonal.
 
 ```
-;  ;  ;
- a a a
+v  <  <
+ n n n
   678
-;a5x1a;
+>  x1n>
   432
- a a a
-;  ;  ;
+ n n n
+<  <  <
 ```
 
 This shows some wrapping and more randomness.
 
 ```
-x1a;a4
+x1n;n4
 23
-a a
+n n
 ;  ;
-a   
+n   
 5
 ```
 
