@@ -123,7 +123,7 @@ public class Refract {
             while (run) {
                 pos = dir.move(pos);
                 check();
-                if (debug) stacks[sid].print();
+                // if (debug) stacks[sid].print();
                 if (skip) {
                     skip = false;
                     continue;
@@ -257,7 +257,8 @@ public class Refract {
             if (debug) System.out.println("JUMP");
             double y = stacks[sid].pop();
             double x = stacks[sid].pop();
-            if (!isInteger(y) || !isInteger(x)) { throw new NumberFormatException("X or Y is no integer!"); }
+            if (!isInteger(y) || !isInteger(x)) { throw new NumberFormatException("X or Y is no integer! " + "("
+                    + pos[0] + "," + pos[1] + ")"); }
             pos = new int[] { (int) x, (int) y };
         }
         else if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
@@ -307,7 +308,8 @@ public class Refract {
             if (c == '[') {
                 if (debug) System.out.println("NEW STACK");
                 double x = stacks[sid].pop();
-                if (Math.floor(x) != Math.ceil(x)) { throw new NumberFormatException("X is not an Integer!"); }
+                if (Math.floor(x) != Math.ceil(x)) { throw new NumberFormatException("X is not an Integer! " + "("
+                        + pos[0] + "," + pos[1] + ")"); }
                 sid++;
                 stacks[sid] = new Stack(stacksize, this);
                 for (int a = 0; a < x; a++) {
@@ -338,6 +340,10 @@ public class Refract {
             int i = System.in.read();
             stacks[sid].push(i);
         }
+        else if (c == 'j') {
+            int i = Integer.parseInt(System.console().readLine());
+            stacks[sid].push(i);
+        }
         else if (c == '&') {
             if (debug) System.out.println("REGISTER");
             if (reg) stacks[sid].push(register);
@@ -348,7 +354,8 @@ public class Refract {
             if (debug) System.out.println("GET");
             double y = stacks[sid].pop();
             double x = stacks[sid].pop();
-            if (!isInteger(y) || !isInteger(x)) { throw new NumberFormatException("X or Y is not an Integer!"); }
+            if (!isInteger(y) || !isInteger(x)) { throw new NumberFormatException("X or Y is not an Integer! " + "("
+                    + pos[0] + "," + pos[1] + ")"); }
             char v = grid[(int) y][(int) x];
             stacks[sid].push(v);
         }
@@ -358,15 +365,20 @@ public class Refract {
             double x = stacks[sid].pop();
             double v = stacks[sid].pop();
             if (!isInteger(y) || !isInteger(x) || !isInteger(v)) { throw new NumberFormatException(
-                    "X, Y or V is not an Integer!"); }
+                    "X, Y or V is not an Integer! " + "(" + pos[0] + "," + pos[1] + ")"); }
             grid[(int) x][(int) y] = (char) v;
+        }
+        else if (c == 'm') {
+            if (debug) System.out.println("IS EMPTY");
+            int e = stacks[sid].length() > 0 ? 1 : 0;
+            stacks[sid].push(e);
         }
         else if (c == ';') {
             run = false;
             return;
         }
         else {
-            System.out.println("Unknown command: " + c);
+            System.out.println("Unknown command: " + c + ": " + (int) c);
         }
     }
 
@@ -606,9 +618,9 @@ enum Directions {
             case DOWN_LEFT:
                 return this;
             case LEFT:
-                return DOWN_LEFT;
-            case RIGHT:
                 return DOWN_RIGHT;
+            case RIGHT:
+                return DOWN_LEFT;
             case UP_RIGHT:
                 return DOWN_LEFT;
             case UP_LEFT:
@@ -656,13 +668,15 @@ class Stack {
 
     public void push(double x) {
         if (refract.debug) System.out.println("PUSH " + x + " TO " + (i + 1));
-        if (i >= stack.length - 1) { throw new ArrayIndexOutOfBoundsException("Can't push to full stack!"); }
+        if (i >= stack.length - 1) { throw new ArrayIndexOutOfBoundsException("Can't push to full stack! " + "("
+                + refract.pos[0] + "," + refract.pos[1] + ")"); }
         stack[++i] = x;
     }
 
     public double pop() {
         if (refract.debug) System.out.println("POP " + stack[i] + " FROM " + i);
-        if (i <= -1) { throw new ArrayIndexOutOfBoundsException("Can't pop from empty stack!"); }
+        if (i <= -1) { throw new ArrayIndexOutOfBoundsException("Can't pop from empty stack! " + "(" + refract.pos[0]
+                + "," + refract.pos[1] + ")"); }
         double x = stack[i];
         stack[i] = 0;
         i--;
