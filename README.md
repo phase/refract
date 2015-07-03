@@ -1,18 +1,33 @@
 # refract
 **refract** is a 2D, stack-based, esoteric language.
 
-##examples
-```
-!v"Hello, World!"r!
- >l?!;o
-```
-
 ##differences from ><>
 Most of the language is from [><>](https://esolangs.org/wiki/Fish), but there are some differences.
 
+* `@` now puts the third item on the stack to the top (like GolfScript and every other language).
+* `m` pushes 0 if the stack is empty, 1 if not.
+* `j` pushes a number input fomr stdin
+
+Code Blocks can be made with `{}`, and are assigned to a character.
+
+```
+{21+n}h h
+```
+
+Prints 3
+
+You can assign it to *any* character
+
+```
+{21+n}  
+```
+
+Prints 3 because it assigns it to a space, then calls it with the second space.
+
+
+
 Movement can go diagonal, though it doesn't if you don't include `x`, `y`, or `z`.
 
-###`x`
 Random movement can go diagonal (image in example starts in the center).
 
 ```
@@ -34,10 +49,9 @@ a a
 ;  ;
 a   
 5
-```  
+```
 
-###`z`
-The stack contents are shown after each example.
+`z` and `y` reflect the direction of movement base on where it hits the letter.
 
 ```
 2
@@ -81,8 +95,6 @@ z
 
 **11**
 
-###`y`
-
 ```
 111y
   2
@@ -100,28 +112,3 @@ y111
 ```
 
 **111222**
-
-```
-1
-y
-2
-^
-```
-
-**1221**
-
-###`#`
-
-```
-1
-#
-```
-
-**11**
-
-```
- 1
-#
-```
-
-**11**
