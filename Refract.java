@@ -373,7 +373,7 @@ public class Refract {
             int i = System.in.read();
             stacks[sid].push(i);
         }
-        else if (c == 'e') {
+        else if (c == 'E') {
             double i = stacks[sid].pop();
             int f = ((int) i) % 2 == 0 ? 1 : 0;
             System.out.println(f);
