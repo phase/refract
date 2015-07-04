@@ -135,7 +135,7 @@ public class Refract {
                     continue;
                 }
                 char c = grid[pos[1]][pos[0]];
-                parse(c);
+                parse(c, false);
                 sleep(c);
             }
         }
@@ -212,12 +212,14 @@ public class Refract {
         pos = new int[] { x, y };
     }
 
-    public void parse(char c) throws IOException {
+    public void parse(char c, boolean block) throws IOException {
         if (debug) System.out.println(c);
-        for (CodeBlock cb : codeBlocks) {
-            if (cb.name == c) {
-                cb.run();
-                return;
+        if (!block) {
+            for (CodeBlock cb : codeBlocks) {
+                if (cb.name == c) {
+                    cb.run();
+                    return;
+                }
             }
         }
         if (c == 3) {
@@ -856,7 +858,7 @@ class CodeBlock {
         Directions d = refract.dir;
         for (char c : code.toCharArray()) {
             try {
-                refract.parse(c);
+                refract.parse(c, true);
                 refract.sleep(c);
             }
             catch (IOException e) {
