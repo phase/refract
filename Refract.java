@@ -400,7 +400,7 @@ public class Refract {
         }
         else if (c == 'm') {
             if (debug) System.out.println("IS EMPTY");
-            int e = stacks[sid].length() > 0 ? 1 : 0;
+            int e = stacks[sid].length() > 0 ? 0 : 1;
             stacks[sid].push(e);
         }
         else if (c == ';') {
