@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.Random;
+import java.util.*;
 
 public class Refract {
 
@@ -16,12 +16,14 @@ public class Refract {
     boolean debug = false; // Debugging mode
     boolean string = false; // When string is turned on
     boolean codeBlock = false; // When code block is turned on
-    boolean codeBlockCreate = false; // When a new code block is going to be made
+    boolean codeBlockCreate = false; // When a new code block is going to be
+                                     // made
     Stack[] stacks = new Stack[1024]; // The array of stacks
     char[][] grid = null; // The grid from the file
     Directions dir = Directions.RIGHT; // The current direction
     StringBuilder sb = new StringBuilder(); // The StringBuilder for strings
-    StringBuilder codeBlockBuilder = new StringBuilder(); // The StringBuilder for code blocks
+    StringBuilder codeBlockBuilder = new StringBuilder(); // The StringBuilder
+                                                          // for code blocks
     ArrayList<CodeBlock> codeBlocks = new ArrayList<CodeBlock>();
 
     public Refract(String[] args) {
@@ -133,9 +135,7 @@ public class Refract {
                     continue;
                 }
                 char c = grid[pos[1]][pos[0]];
-
                 parse(c);
-
                 sleep(c);
             }
         }
@@ -215,7 +215,7 @@ public class Refract {
     public void parse(char c) throws IOException {
         if (debug) System.out.println(c);
         for (CodeBlock cb : codeBlocks) {
-            if(cb.name == c) {
+            if (cb.name == c) {
                 cb.run();
                 return;
             }
@@ -230,11 +230,11 @@ public class Refract {
         }
         else if (c == '{' || c == '}') {
             if (c == '{') {
-                if(codeBlock){throw new IllegalArgumentException("There is already a code block being made!");return;}
+                if (codeBlock) { throw new IllegalArgumentException("There is already a code block being made!"); }
                 codeBlock = true;
             }
             else if (c == '}') {
-                if(!codeBlock){throw new IllegalArgumentException("There is no code block being made!");return;}
+                if (!codeBlock) { throw new IllegalArgumentException("There is no code block being made!"); }
                 codeBlock = false;
                 codeBlockCreate = true;
             }
@@ -844,8 +844,8 @@ class CodeBlock {
 
     String code;
     char name;
-    Refract refract
-    
+    Refract refract;
+
     public CodeBlock(String code, char name, Refract refract) {
         this.code = code;
         this.name = name;
@@ -853,10 +853,15 @@ class CodeBlock {
     }
 
     public void run() {
-        Direction d = refract.dir;
+        Directions d = refract.dir;
         for (char c : code.toCharArray()) {
-            refract.parse(c);
-            refract.sleep(c);
+            try {
+                refract.parse(c);
+                refract.sleep(c);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         refract.dir = d;
     }
