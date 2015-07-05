@@ -162,14 +162,14 @@ public class Refract {
         System.out.println("        > 132");
         System.out.println();
         System.out.println("    The -v and -s flags can be used to prepopulate the stack:");
-        System.out.println("        java Refract echo.fish -s \"hello, world\" -v 32 49 50 51 -s \"456\"");
+        System.out.println("        java Refract echo.r -s \"hello, world\" -v 32 49 50 51 -s \"456\"");
         System.out.println("        > hello, world 123456");
         System.out.println();
         System.out.println("optional arguments:");
         System.out.println("  -h, --help            show this help message and exit");
         System.out.println();
         System.out.println("code:");
-        System.out.println("  script                .refract file to execute");
+        System.out.println("  script                .r file to execute");
         System.out.println("  -c <code>, --code <code>");
         System.out.println("                        string of instructions to execute");
         System.out.println();
@@ -183,6 +183,7 @@ public class Refract {
         System.out.println("                        of each instruction");
         System.out.println("  -a, --always-tick     make every instruction cause a tick (delay), even");
         System.out.println("                        whitespace and skipped instructions");
+        System.out.println("\nCheck the repo for more information at\n https://github.com/phase/refract");
     }
 
     public void sleep(char c) {
