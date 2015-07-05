@@ -370,26 +370,26 @@ public class Refract {
             double i = stacks[sid].pop();
             System.out.print((char) i);
         }
-        else if (c == '√') {
+        else if (c == '\u221A') {
             double i = stacks[sid].pop();
             stacks[sid].push(Math.sqrt(i));
         }
-        else if (c == 'π') {
+        else if (c == '\u03C0') {
             stacks[sid].push(Math.PI);
         }
-        else if (c == 'Σ') {
+        else if (c == '\u03A3') {
             double x = 0.0;
             for (int i = 0; i < stacks[sid].length(); i++)
                 x += stacks[sid].pop();
             stacks[sid].push(x);
         }
-        else if (c == 'Π') {
+        else if (c == '\u03A0') {
             double x = 0.0;
             for (int i = 0; i < stacks[sid].length(); i++)
                 x *= stacks[sid].pop();
             stacks[sid].push(x);
         }
-        else if (c == 'Ø') {
+        else if (c == '\u00F8') {
             portalPos[0] = pos[0] - 1;
             portalPos[1] = pos[1];
         }
