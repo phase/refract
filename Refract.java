@@ -18,6 +18,7 @@ public class Refract {
     boolean codeBlock = false; // When code block is turned on
     boolean codeBlockCreate = false; // When a new code block is going to be
                                      // made
+    int[] portalPos = { 0, 0 };
     Stack[] stacks = new Stack[1024]; // The array of stacks
     char[][] grid = null; // The grid from the file
     Directions dir = Directions.RIGHT; // The current direction
@@ -368,6 +369,12 @@ public class Refract {
         else if (c == 'o') {
             double i = stacks[sid].pop();
             System.out.print((char) i);
+        }
+        else if (c == 'Ø') {
+            portalPos = pos;
+        }
+        else if (c == 'O') {
+            pos = portalPos;
         }
         else if (c == 'i') {
             int i = System.in.read();
