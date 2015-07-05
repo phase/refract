@@ -215,8 +215,7 @@ public class Refract {
     }
 
     public void parse(char c, boolean block) throws IOException {
-        if (debug) 
-            System.out.println(c);
+        if (debug) System.out.println(c);
         if (!block) {
             for (CodeBlock cb : codeBlocks) {
                 if (cb.name == c) {
@@ -374,6 +373,9 @@ public class Refract {
         else if (c == '√') {
             double i = stacks[sid].pop();
             stacks[sid].push(Math.sqrt(i));
+        }
+        else if (c == 'π') {
+            stacks[sid].push(Math.PI);
         }
         else if (c == 'Ø') {
             portalPos[0] = pos[0] - 1;
