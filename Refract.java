@@ -370,8 +370,9 @@ public class Refract {
             double i = stacks[sid].pop();
             System.out.print((char) i);
         }
-        else if (c == 'Ã˜') {
-            portalPos = pos;
+        else if (c == 'Ø') {
+            portalPos[0] = pos[0] - 1;
+            portalPos[1] = pos[1];
         }
         else if (c == 'O') {
             pos = portalPos;
